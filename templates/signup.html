@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TemplFile-SignUp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <style type="text/css">
+        html,
+        body {
+            font-family: 'Open Sans';
+        }
+
+        img {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero is-fullheight is-default is-bold">
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <span class="navbar-burger burger" data-target="navbarMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div id="navbarMenu" class="navbar-menu">
+                        <div class="navbar-end">
+                            <div class="tabs is-right">
+                                <ul>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/founders">Founders</a></li>
+                                    <li><a href="/login">Log In</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title is-1">Sign Up</h1>
+                <div class="columns is-centered">
+                    <div class="column is-4">
+                        <div class="columns is-centered">
+                              <img src="/static/images/logo_size_login.jpg" style="border: 1px solid white;">
+                        </div>
+                        <form action="" method="post">
+                            <div class="field">
+                                <label class="label">Username</label>
+                                <input class="input" type="text" placeholder="Username" name="Username">
+                            </div>
+                            <div class="field">
+                                <label class="label">Name</label>
+                                <input class="input" type="text" placeholder="Name" name="Name">
+                            </div>
+                            <div class="field">
+                                <label class="label">Surname</label>
+                                <input class="input" type="text" placeholder="Surname" name="Surname">
+                            </div>
+                            <div class="field">
+                                <label class="label">E-Mail</label>
+                                <input class="input" type="email" placeholder="Email" name="Email">
+                            </div>
+                            <div class="field">
+                                <label class="label">Password</label>
+                                <input class="input" type="password" placeholder="Password" name="Password">
+                            </div>
+                            <div class="field is-grouped">
+                              <div class="control">
+                                <button class="button is-link">Login</button>
+                              </div>
+                            </div>
+                        </form>
+                        {% if error%}
+                            <p class="error help is-danger">{{ error }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-foot">
+            <div class="container">
+                <div class="tabs is-centered">
+                    <ul>
+                        <li><a>And this is the bottom</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
+© 2021 GitHub, Inc.

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TemplFile-Userpage</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <!-- Bulma Version 0.9.0-->
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <style type="text/css">
+        html,
+        body {
+            font-family: 'Open Sans';
+        }
+
+        img {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    {% if user%}
+        <h1 class="title is-1">Ciao {{ user }} !!</h1>
+    {% endif %}
+    <a href="/static/FILE_FOLDER/biglietto_bado.pdf">prova qui</a>
+    <form action = "http://192.168.0.20:5000/uploader" method = "POST" enctype = "multipart/form-data">
+        <div class="file">
+            <label class="file-label">
+                <input class="file-input" type = "file" name = "file" />
+                <span class="file-cta">
+                    <span class="file-label">
+                    Choose a file…
+                    </span>
+                </span>
+            </label>
+        </div>
+        <div class="field">
+          <label class="label">Categoria</label>
+          <div class="control">
+            <div class="select">
+              <select name="categoria">
+                <option>Autocertificazione</option>
+                <option>Biglietto</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <br>
+        <input class="button is-link" type = "submit"/>
+      </form>
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
