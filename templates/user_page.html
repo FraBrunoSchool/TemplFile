@@ -22,6 +22,36 @@
     </style>
 </head>
 <body>
+    <div class="box" style="margin-top: 2%; margin-left: 7%; margin-right: 7%">
+        <nav class="level">
+          <p class="level-item has-text-centered">
+            <a class="link is-info">Home</a>
+          </p>
+          <p class="level-item has-text-centered">
+            <a class="link is-info">Menu</a>
+          </p>
+          <p class="level-item is-centered">
+            <img class="is-centered" src="static/images/logo_size_no_scritta.jpg" alt="" style="height: 75px; border: 1px solid white;">
+          </p>
+          <!--<p class="level-item has-text-centered">
+            <a class="link is-info">Reservations</a>
+          </p>-->
+          <p class="level-item has-text-centered">
+            <div class="level-item">
+            <form action="/search" method = "POST">
+              <div class="field has-addons">
+                <p class="control">
+                  <input class="input" type="text" placeholder="Find a post" name="search">
+                </p>
+                <p class="control">
+                  <input type="submit" class="button">
+                </p>
+              </div>
+            </form>
+            </div>
+          </p>
+        </nav>
+    </div>
     {% if user%}
         <h1 class="title is-1">Ciao {{ user }} !!</h1>
     {% endif %}
@@ -30,7 +60,8 @@
         <br>
     {% endfor %}
 
-    <form action = "http://192.168.88.26:5000/uploader" method = "POST" enctype = "multipart/form-data">
+    <div class="box">
+    <form action="/uploader" method = "POST" enctype = "multipart/form-data">
         <div class="file">
             <label class="file-label">
                 <input class="file-input" type = "file" name = "file" />
@@ -56,6 +87,17 @@
         <br>
         <input class="button is-link" type = "submit"/>
       </form>
+        </div>
+
+    {% if search %}
+    <div class="box">
+        Search
+    {% for o in search %}
+        <button class="button is-link" onclick="window.open('/static/FILE_FOLDER/{{o.username}}/{{o.file_name}}')">{{o.file_name}}</button>
+        <br>
+    {% endfor %}
+    </div>
+    {% endif %}
     <script src="/static/script.js"></script>
 
 </body>

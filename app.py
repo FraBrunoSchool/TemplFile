@@ -36,11 +36,12 @@ def user_page():
         url.append({'username': session['username'], 'file_name': row[0]})
     db_cursor.close()
 
-    return render_template('user_page.html', user=session['username'], lista_categorie=data, lista_url=url)
+    return render_template('user_page.html', user=session['username'], lista_categorie=data, lista_url=url, search=session['url_search'])
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    session['url_search'] = [{'username': ' ', 'file_name': 'nessuna ricerca effettuata'}]
     error = None
     if request.method == 'POST':
         username = request.form['Username']
@@ -88,6 +89,26 @@ def upload_file():
         f"INSERT INTO File ('nome_file','categoria_file','username_utente') VALUES ('{filename}','{categoria}','{username}')")
     db_cursor.execute("COMMIT;")
     db_cursor.close()
+    return redirect(url_for('user_page'))
+
+
+@app.route('/search', methods=['POST'])
+def search_file():
+    search = request.form['search']
+    # username = session['username']
+    db_connection = sqlite3.connect('static/TemplFile.db')
+    db_cursor = db_connection.cursor()
+    nome_file = []
+    nome_utenti = []
+    for row in db_cursor.execute("SELECT nome_file, username_utente FROM File"):
+        nome_file.append(row[0])
+        nome_utenti.append(row[1])
+    url=[]
+    for index, el in enumerate(nome_file):
+        if search in nome_file:
+            url.append({'username': nome_utenti[index], 'file_name': el})
+    db_cursor.close()
+    session['url_search'] = url
     return redirect(url_for('user_page'))
 
 
@@ -142,4 +163,4 @@ def insert_user(username, password, name, surname, email):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.88.26', debug='on')
+    app.run(host='192.168.0.34', debug='on')
