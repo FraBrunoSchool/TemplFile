@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TemplFile-Userpage</title>
+    <title>TemplFile | Userpage</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <!-- Bulma Version 0.9.0-->
@@ -25,8 +25,12 @@
     {% if user%}
         <h1 class="title is-1">Ciao {{ user }} !!</h1>
     {% endif %}
-    <a href="/static/FILE_FOLDER/biglietto_bado.pdf">prova qui</a>
-    <form action = "http://192.168.0.20:5000/uploader" method = "POST" enctype = "multipart/form-data">
+    {% for o in lista_url %}
+        <button class="button is-link" onclick="window.open('/static/FILE_FOLDER/{{o.username}}/{{o.file_name}}')">{{o.file_name}}</button>
+        <br>
+    {% endfor %}
+
+    <form action = "http://192.168.88.26:5000/uploader" method = "POST" enctype = "multipart/form-data">
         <div class="file">
             <label class="file-label">
                 <input class="file-input" type = "file" name = "file" />
@@ -40,12 +44,13 @@
         <div class="field">
           <label class="label">Categoria</label>
           <div class="control">
-            <div class="select">
-              <select name="categoria">
-                <option>Autocertificazione</option>
-                <option>Biglietto</option>
-              </select>
-            </div>
+              <div class="select">
+                  <select name="categoria">
+                      {% for o in lista_categorie %}
+                      <option value="{{ o.name }}">{{ o.name }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
           </div>
         </div>
         <br>

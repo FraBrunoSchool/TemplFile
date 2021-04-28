@@ -23,7 +23,20 @@ def founders():
 
 @app.route('/user_page', methods=['GET', 'POST'])
 def user_page():
-    return render_template('user_page.html', user=session['username'])
+    db_connection = sqlite3.connect('static/TemplFile.db')
+    db_cursor = db_connection.cursor()
+    data = []
+    for row in db_cursor.execute(f'SELECT categoria FROM Categorie'): data.append({'name': row[0]})
+    db_cursor.close()
+    print(data)
+    db_connection = sqlite3.connect('static/TemplFile.db')
+    db_cursor = db_connection.cursor()
+    url = []
+    for row in db_cursor.execute(f'SELECT nome_file FROM File WHERE username_utente = "{session["username"]}"'):
+        url.append({'username': session['username'], 'file_name': row[0]})
+    db_cursor.close()
+
+    return render_template('user_page.html', user=session['username'], lista_categorie=data, lista_url=url)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -52,6 +65,7 @@ def validate(username, password):
     for row in db_cursor.execute(
             f'SELECT username, password FROM Users WHERE username="{username}"'): lista_iscritti.append(
         (row[0], row[1]))
+    db_connection.close()
     print(lista_iscritti)
     for iscritto in lista_iscritti:
         if username == iscritto[0] and password == iscritto[1]:
@@ -67,7 +81,7 @@ def upload_file():
     categoria = request.form['categoria']
     filename = secure_filename(f.filename)
     username = session['username']
-    f.save(os.path.join(app.config['FILE_FOLDER']+f"/{username}", filename))
+    f.save(os.path.join(app.config['FILE_FOLDER'] + f"/{username}", filename))
     db_connection = sqlite3.connect('static/TemplFile.db')
     db_cursor = db_connection.cursor()
     db_cursor.execute(
@@ -93,7 +107,7 @@ def signup():
         if username_free(username):
             insert_user(username, password, name, surname, email)
             # Parent Directory path
-            parent_dir = "D:\Desktop\TemplFile\static\FILE_FOLDER"
+            parent_dir = "D:\Dati\Desktop\GitHub\TemplFile\static\FILE_FOLDER"
             # Path
             path = os.path.join(parent_dir, username)
             os.mkdir(path)
@@ -110,6 +124,7 @@ def username_free(username):
     lista_username = []
     for row in db_cursor.execute(
             'SELECT username FROM Users'): lista_username.append(row[0])
+    db_cursor.close()
     if username in lista_username:
         return False
     else:
@@ -127,4 +142,4 @@ def insert_user(username, password, name, surname, email):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.20', debug='on')
+    app.run(host='192.168.88.26', debug='on')
