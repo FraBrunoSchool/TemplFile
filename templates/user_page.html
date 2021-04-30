@@ -56,6 +56,7 @@
         <h1 class="title is-1">Ciao {{ user }} !!</h1>
     {% endif %}
     {% for o in lista_url %}
+        <iframe src="/static/FILE_FOLDER/{{o.username}}/{{o.file_name}}"></iframe>
         <button class="button is-link" onclick="window.open('/static/FILE_FOLDER/{{o.username}}/{{o.file_name}}')">{{o.file_name}}</button>
         <br>
     {% endfor %}

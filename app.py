@@ -21,6 +21,16 @@ def founders():
     return render_template('founders.html')
 
 
+@app.route('/categorie')
+def categorie():
+    return render_template('categorie.html')
+
+
+@app.route('/upload')
+def upload():
+    return render_template('upload.html')
+
+
 @app.route('/user_page', methods=['GET', 'POST'])
 def user_page():
     db_connection = sqlite3.connect('static/TemplFile.db')
@@ -36,7 +46,8 @@ def user_page():
         url.append({'username': session['username'], 'file_name': row[0]})
     db_cursor.close()
 
-    return render_template('user_page.html', user=session['username'], lista_categorie=data, lista_url=url, search=session['url_search'])
+    # return render_template('user_page.html', user=session['username'], lista_categorie=data, lista_url=url, search=session['url_search'])
+    return render_template('user_page_test.html', user=session['username'], lista_url=url)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -103,7 +114,7 @@ def search_file():
     for row in db_cursor.execute("SELECT nome_file, username_utente FROM File"):
         nome_file.append(row[0])
         nome_utenti.append(row[1])
-    url=[]
+    url = []
     for index, el in enumerate(nome_file):
         if search in nome_file:
             url.append({'username': nome_utenti[index], 'file_name': el})
@@ -163,4 +174,4 @@ def insert_user(username, password, name, surname, email):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.34', debug='on')
+    app.run(host='192.168.0.30', debug='on')
