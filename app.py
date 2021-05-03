@@ -23,30 +23,35 @@ def founders():
 
 @app.route('/categorie')
 def categorie():
-    return render_template('categorie.html')
+    return render_template('categorie.html', user=session['username'])
 
 
 @app.route('/upload')
 def upload():
-    return render_template('upload.html')
-
-
-@app.route('/user_page', methods=['GET', 'POST'])
-def user_page():
     db_connection = sqlite3.connect('static/TemplFile.db')
     db_cursor = db_connection.cursor()
     data = []
     for row in db_cursor.execute(f'SELECT categoria FROM Categorie'): data.append({'name': row[0]})
     db_cursor.close()
     print(data)
+    return render_template('upload.html', user=session['username'], lista_categorie=data)
+
+
+"""@app.route('/search')
+def search():
+    return render_template('search.html', user=session['username'])"""
+
+
+@app.route('/user_page', methods=['GET', 'POST'])
+def user_page():
     db_connection = sqlite3.connect('static/TemplFile.db')
     db_cursor = db_connection.cursor()
     url = []
     for row in db_cursor.execute(f'SELECT nome_file FROM File WHERE username_utente = "{session["username"]}"'):
         url.append({'username': session['username'], 'file_name': row[0]})
     db_cursor.close()
-
-    # return render_template('user_page.html', user=session['username'], lista_categorie=data, lista_url=url, search=session['url_search'])
+    # return render_template('user_page.html', user=session['username'], lista_categorie=data, lista_url=url,
+    # search=session['url_search'])
     return render_template('user_page_test.html', user=session['username'], lista_url=url)
 
 
@@ -103,7 +108,7 @@ def upload_file():
     return redirect(url_for('user_page'))
 
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['GET', 'POST'])
 def search_file():
     search = request.form['search']
     # username = session['username']
@@ -116,11 +121,12 @@ def search_file():
         nome_utenti.append(row[1])
     url = []
     for index, el in enumerate(nome_file):
-        if search in nome_file:
+        if el.find(search) != -1:
             url.append({'username': nome_utenti[index], 'file_name': el})
     db_cursor.close()
-    session['url_search'] = url
-    return redirect(url_for('user_page'))
+    if len(url)>0: return render_template('search.html', user=session['username'], lista_url=url)
+    else: return render_template('search.html', user=session['username'], failed="La ricerca non ha ottenuto risultati")
+
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -174,4 +180,4 @@ def insert_user(username, password, name, surname, email):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.30', debug='on')
+    app.run(host='192.168.0.20', debug='on')
