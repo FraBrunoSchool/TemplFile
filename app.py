@@ -120,13 +120,16 @@ def search_file():
         nome_file.append(row[0])
         nome_utenti.append(row[1])
     url = []
+    search = search.upper()
     for index, el in enumerate(nome_file):
+        el = el.upper()
         if el.find(search) != -1:
             url.append({'username': nome_utenti[index], 'file_name': el})
     db_cursor.close()
-    if len(url)>0: return render_template('search.html', user=session['username'], lista_url=url)
-    else: return render_template('search.html', user=session['username'], failed="La ricerca non ha ottenuto risultati")
-
+    if len(url) > 0:
+        return render_template('search.html', user=session['username'], lista_url=url)
+    else:
+        return render_template('search.html', user=session['username'], failed="La ricerca non ha ottenuto risultati")
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -180,4 +183,4 @@ def insert_user(username, password, name, surname, email):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.20', debug='on')
+    app.run(host='192.168.88.26', debug='on')
