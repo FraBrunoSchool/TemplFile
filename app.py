@@ -23,7 +23,34 @@ def founders():
 
 @app.route('/categorie')
 def categorie():
-    return render_template('categorie.html', user=session['username'])
+    db_connection = sqlite3.connect('static/TemplFile.db')
+    db_cursor = db_connection.cursor()
+    data = []
+    for row in db_cursor.execute(f'SELECT categoria FROM Categorie'): data.append({'name': row[0]})
+    db_cursor.close()
+    print(data)
+    return render_template('categorie.html', user=session['username'], lista_categorie=data)
+
+
+@app.route('/categorie', methods=['POST'])
+def search_file_categoria():
+    db_connection = sqlite3.connect('static/TemplFile.db')
+    db_cursor = db_connection.cursor()
+    categoria = request.form['categoria']
+    print(categoria)
+    nome_file = []
+    nome_utenti = []
+    for row in db_cursor.execute(f'SELECT nome_file, username_utente FROM File WHERE categoria_file=="{categoria}"'):
+        nome_file.append(row[0])
+        nome_utenti.append(row[1])
+    url = []
+    for index, el in enumerate(nome_file):
+        url.append({'username': nome_utenti[index], 'file_name': el})
+    db_cursor.close()
+    if len(url) > 0:
+        return render_template('search.html', user=session['username'], lista_url=url)
+    else:
+        return render_template('search.html', user=session['username'], failed="La ricerca non ha ottenuto risultati")
 
 
 @app.route('/upload')
@@ -183,4 +210,4 @@ def insert_user(username, password, name, surname, email):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.88.26', debug='on')
+    app.run(host='192.168.0.31', debug='on')

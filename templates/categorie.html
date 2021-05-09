@@ -165,21 +165,94 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Ricerca per categoria</h1>
-
+                    <!--form ricerca categorie-->
                 </div>
+                <div class="card" style="margin: 20%">
+                    <div class="card-body">
+                        <form action="/categorie" method = "POST" enctype = "multipart/form-data">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="categoria">
+                                <label for="formFile" class="form-label">Choose a categoria</label>
+                                <option selected>Open this select menu</option>
+                                    {% for o in lista_categorie %}
+                                        <option value="{{ o.name }}">{{ o.name }}</option>
+                                    {% endfor %}
+                            </select>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                
+                
+
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+            <footer class="bg-primary text-white text-center text-lg-start">
+                <!-- Grid container -->
+                <div class="container p-4">
+                <!--Grid row-->
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">TEMPLATE FILE</h5>
+                    <p>
+                        <img class="is-centered" src="/static/images/logo_size_no_scritta.jpg" alt="" style="height: 75px; border: 1px solid white;"/>
+                    </p>
                     </div>
+                    <!--Grid column-->
+            
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-0">Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                        <a href="/" class="text-white">Home</a>
+                        </li>
+                        <li>
+                        <a href="/founders" class="text-white">Founders </a>
+                        </li>
+                        <li>
+                        <a href="/signUp" class="text-white">SIGN UP</a>
+                        </li>
+                    </ul>
+                    </div>
+                    <!--Grid column-->
+            
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-0"> CHI SIAMO </h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="/founders" class="text-white">Badoino Matteo</a>
+                        </li>
+                        <li>
+                            <a href="/founders" class="text-white"> Bruno Francesco</a>
+                        </li>
+                        <li>
+                            <a href="/founders" class="text-white">Bernardi Gianluca</a>
+                        </li>
+                    </ul>
+                    </div>
+                    <!--Grid column-->
                 </div>
+                <!--Grid row-->
+                </div>
+                <!-- Grid container -->
+            
+                <!-- Copyright -->
+                <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2021 Copyright
+                </div>
+                <!-- Copyright -->
             </footer>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+            <script src="/static/script.js"></script>
             <!-- End of Footer -->
 
         </div>
