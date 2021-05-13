@@ -149,8 +149,8 @@ def search_file():
     url = []
     search = search.upper()
     for index, el in enumerate(nome_file):
-        el = el.upper()
-        if el.find(search) != -1:
+        el1 = el.upper()
+        if el1.find(search) != -1:
             url.append({'username': nome_utenti[index], 'file_name': el})
     db_cursor.close()
     if len(url) > 0:
@@ -210,4 +210,4 @@ def insert_user(username, password, name, surname, email):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.31', debug='on')
+    app.run(host='192.168.88.26', debug='on')
